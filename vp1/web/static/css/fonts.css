@@ -1,0 +1,84 @@
+/* ===== 1. Vazirmatn (فونت اصلی فارسی) ===== */
+
+/* Light */
+@font-face {
+  font-family: 'Vazirmatn';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('../fonts/uU9NCBsR6Z2vfE9aq3bh09SDulI.woff2') format('woff2');
+}
+
+/* Regular */
+@font-face {
+  font-family: 'Vazirmatn';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/uU9NCBsR6Z2vfE9aq3bh0dSDulI.woff2') format('woff2');
+}
+
+/* Medium */
+@font-face {
+  font-family: 'Vazirmatn';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url('../fonts/uU9NCBsR6Z2vfE9aq3bh0NSDulI.woff2') format('woff2');
+}
+
+/* SemiBold */
+@font-face {
+  font-family: 'Vazirmatn';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('../fonts/uU9NCBsR6Z2vfE9aq3bh2dSDulI.woff2') format('woff2');
+}
+
+/* Bold */
+@font-face {
+  font-family: 'Vazirmatn';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/uU9NCBsR6Z2vfE9aq3bh3dSD.woff2') format('woff2');
+}
+
+/* ExtraBold / Black */
+@font-face {
+  font-family: 'Vazirmatn';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('../fonts/uU9NCBsR6Z2vfE9aq3bhZ_Wmh2uX.woff2') format('woff2');
+}
+
+
+/* ===== 2. Fira Code (فونت انگلیسی و کدها) ===== */
+
+@font-face {
+  font-family: 'Fira Code';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: local('Fira Code'), local('FiraCode-Regular'), monospace;
+}
+
+/* Vazirmatn Regular */
+@font-face {
+  font-family: 'Vazirmatn';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/Vazirmatn-Regular.woff2') format('woff2');
+}
+
+/* Vazirmatn Bold */
+@font-face {
+  font-family: 'Vazirmatn';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/Vazirmatn-Bold.woff2') format('woff2');
+}

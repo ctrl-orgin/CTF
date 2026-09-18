@@ -1,0 +1,26 @@
+services:
+  vp1-ctf:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      network: host
+      args:
+        USER: "Ctrl"
+        PASS: "CtrlPass"
+    container_name: vp1_ctf_container
+    restart: always
+    cap_add:
+      - NET_ADMIN
+      - SYS_ADMIN
+    ports:
+      - "8080:80" # پورت داشبورد وب سرور
+    environment:
+      - SERVER_ADDR=0.0.0.0:80
+      - SERVER_URL=http://127.0.0.1:80/api
+      - SERVER_USER=Ctrl
+      - SERVER_PASS=CtrlPass
+      - SET1=2000
+      - CHK1=Ctrl
+      - FLG1=Ctrl
+      - FLG2=Ctrl
+      - VP=1

@@ -1,0 +1,934 @@
+:root {
+
+    --theme-bg-dark: #0a0a0a;
+    --theme-bg-darker: #050505;
+    --theme-cyan: #00d2ff;
+    --theme-green: #00ff88;
+    --theme-blue: #0055ff;
+    --theme-gray-light: #b0b0b0;
+    --theme-gray-dark: #1f1f1f;
+}
+
+body {
+    font-family: 'Vazirmatn', sans-serif;
+    background-color: var(--theme-bg-dark);
+    background-image:
+        radial-gradient(circle at 50% 50%, rgba(0, 210, 255, 0.05) 0%, transparent 60%),
+        linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    background-size: 100% 100%, 20px 20px, 20px 20px;
+    color: var(--theme-gray-light);
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+.font-mono-cyber {
+    font-family: 'Fira Code', monospace;
+}
+
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0) 50%, rgba(0, 0, 0, 0.25) 50%, rgba(0, 0, 0, 0.25));
+    background-size: 100% 4px;
+    pointer-events: none;
+    z-index: 50;
+    opacity: 0.6;
+}
+
+.glass-panel {
+    background: rgba(15, 15, 15, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+}
+
+.cyber-card {
+    background: linear-gradient(135deg, var(--theme-bg-darker) 0%, #111 100%);
+    border: 1px solid var(--theme-gray-dark);
+    border-left: 2px solid var(--theme-cyan);
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.cyber-card.active:hover {
+    border-left-color: var(--theme-green);
+    box-shadow: -5px 0 20px rgba(0, 255, 136, 0.15);
+    transform: none;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.status-up {
+    background-color: var(--theme-green);
+    box-shadow: 0 0 8px var(--theme-green);
+}
+
+.status-down {
+    background-color: #ff3333;
+    box-shadow: 0 0 8px #ff3333;
+}
+
+.status-warn {
+    background-color: #ffaa00;
+    box-shadow: 0 0 8px #ffaa00;
+}
+
+.cyber-spoiler {
+    position: relative;
+    color: transparent;
+    text-shadow: 0 0 18px rgba(176, 176, 176, 0.9);
+    background-color: rgba(255, 255, 255, 0.02);
+    border-right: none;
+    padding: 0.85rem;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+    overflow: hidden;
+    filter: blur(5px);
+    user-select: none;
+}
+
+.cyber-spoiler::after {
+    content: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Fira Code', monospace;
+    font-size: 0.75rem;
+    color: var(--theme-cyan);
+    letter-spacing: 0.12em;
+    opacity: 0.95;
+    transition: opacity 0.3s ease;
+    white-space: nowrap;
+    text-shadow: 0 0 8px rgba(0, 210, 255, 0.6);
+}
+
+.cyber-spoiler:hover,
+.cyber-spoiler:active {
+    color: #eee;
+    text-shadow: none;
+    background-color: transparent;
+    border-right-color: var(--theme-green);
+    filter: blur(0);
+    user-select: text;
+}
+
+.cyber-spoiler:hover::after,
+.cyber-spoiler:active::after {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.cyber-btn {
+    background: transparent;
+    border: 1px solid var(--theme-cyan);
+    color: var(--theme-cyan);
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.cyber-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 210, 255, 0.25), transparent);
+    transition: all 0.4s ease;
+}
+
+.cyber-btn:hover {
+    background: rgba(0, 210, 255, 0.15);
+    box-shadow: 0 0 15px rgba(0, 210, 255, 0.4);
+    color: #fff;
+}
+
+.cyber-btn:hover::before {
+    left: 100%;
+}
+
+.cyber-input {
+    background: rgba(0, 0, 0, 0.85);
+    border: 1px solid var(--theme-gray-dark);
+    color: #fff;
+}
+
+.timeline-wrapper {
+    position: relative;
+    padding: 2rem 0;
+}
+
+.timeline-item {
+    position: relative;
+    width: 100%;
+    padding-right: 3rem;
+    margin-bottom: 2.5rem;
+}
+
+.timeline-dot {
+    position: absolute;
+    right: 1.5rem;
+    top: 1.5rem;
+    transform: translate(50%, -50%);
+    z-index: 20;
+    border-radius: 50%;
+    transition: all 0.5s ease;
+}
+
+@media (min-width: 768px) {
+    .timeline-item {
+        width: 50%;
+        margin-bottom: 3rem;
+    }
+
+    .timeline-item:nth-child(odd) {
+        margin-right: 50%;
+        padding-right: 0;
+        padding-left: 3rem;
+    }
+
+    .timeline-item:nth-child(odd) .timeline-dot {
+        right: 0;
+    }
+
+    .timeline-item:nth-child(even) {
+        margin-right: 0;
+        padding-right: 3rem;
+        padding-left: 0;
+    }
+
+    .timeline-item:nth-child(even) .timeline-dot {
+        right: 100%;
+    }
+}
+
+.locked-node {
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+.locked-card {
+    border-left-color: #333 !important;
+}
+
+.locked-dot {
+    background-color: #111;
+    border: 2px solid #333;
+    width: 1rem;
+    height: 1rem;
+}
+
+.active-dot {
+    background-color: var(--theme-bg-dark);
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 2px solid var(--theme-cyan);
+    box-shadow: 0 0 12px var(--theme-cyan);
+    animation: pulse-cyan 2s infinite;
+}
+
+@keyframes pulse-cyan {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 210, 255, 0.5);
+    }
+
+    70% {
+        box-shadow: 0 0 0 12px rgba(0, 210, 255, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 210, 255, 0);
+    }
+}
+
+.solved-dot {
+    background-color: var(--theme-green);
+    width: 1rem;
+    height: 1rem;
+    border: 2px solid #fff;
+    box-shadow: 0 0 12px var(--theme-green);
+}
+
+.solved-card {
+    border-left-color: var(--theme-green) !important;
+}
+
+.treasure-node {
+    width: 100% !important;
+    margin-right: 0 !important;
+    padding: 0 !important;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 4rem;
+    text-align: center;
+}
+
+.treasure-node .timeline-dot {
+    position: relative;
+    right: auto;
+    top: auto;
+    transform: none;
+    margin-bottom: 1.5rem;
+}
+
+/* ===== Mobile Responsive Fixes ===== */
+html {
+    width: 100%;
+    overflow-x: hidden;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+@media (max-width: 767px) {
+    body {
+        padding: 1rem !important;
+        min-width: 0;
+    }
+
+    .max-w-6xl {
+        width: 100%;
+        max-width: 100%;
+    }
+
+    header {
+        margin-bottom: 2rem !important;
+        padding-bottom: 1rem !important;
+    }
+
+    header h1 {
+        font-size: clamp(2.25rem, 12vw, 3.2rem) !important;
+        line-height: 0.95 !important;
+        letter-spacing: 0 !important;
+        word-break: keep-all;
+    }
+
+    header p {
+        font-size: 0.65rem !important;
+        letter-spacing: 0.06em !important;
+        flex-wrap: wrap;
+    }
+
+    header>div:last-child {
+        width: 100%;
+        margin-top: 1.25rem !important;
+        text-align: left !important;
+    }
+
+    header>div:last-child h2 {
+        font-size: 1rem !important;
+    }
+
+    header>div:last-child p {
+        font-size: 0.65rem !important;
+        overflow-wrap: anywhere;
+    }
+
+    section {
+        margin-bottom: 2rem !important;
+    }
+
+    .glass-panel>div {
+        padding: 0.9rem !important;
+    }
+
+    .glass-panel>div>div:first-child {
+        align-items: center;
+    }
+
+    .glass-panel h3 {
+        font-size: 0.68rem !important;
+        letter-spacing: 0.08em !important;
+    }
+
+    .glass-panel .grid {
+        gap: 0.6rem !important;
+    }
+
+    .glass-panel .grid>div {
+        min-width: 0;
+        padding: 0.75rem !important;
+    }
+
+    .glass-panel .grid span {
+        overflow-wrap: anywhere;
+    }
+
+    .timeline-wrapper {
+        padding: 1rem 0 2rem !important;
+    }
+
+    .timeline-wrapper>.absolute {
+        right: 1.15rem !important;
+    }
+
+    .timeline-item {
+        width: 100% !important;
+        margin-right: 0 !important;
+        margin-bottom: 1.5rem !important;
+        padding-right: 2.3rem !important;
+        padding-left: 0 !important;
+    }
+
+    .timeline-item .timeline-dot {
+        right: 1.15rem !important;
+        top: 1.35rem !important;
+    }
+
+    .cyber-card {
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: none !important;
+    }
+
+    .cyber-card:hover {
+        box-shadow: 0 0 25px rgba(0, 210, 255, 0.5) !important;
+        border-color: rgba(34, 197, 94, 0.5) !important;
+    }
+
+    .cyber-card>div:first-child>div:first-child {
+        gap: 0.5rem;
+        align-items: flex-start;
+    }
+
+    .cyber-card h2 {
+        font-size: 1rem !important;
+        line-height: 1.6 !important;
+        flex-wrap: wrap;
+    }
+
+    .cyber-card .node-status-badge {
+        flex-shrink: 0;
+    }
+
+    .cyber-spoiler {
+        padding: 0.75rem !important;
+        font-size: 0.8rem !important;
+        line-height: 1.8 !important;
+        overflow-wrap: anywhere;
+        text-align: right !important;
+    }
+
+    .encrypted-placeholder {
+        font-size: 0.65rem !important;
+        line-height: 1.7 !important;
+        overflow-wrap: anywhere;
+    }
+
+    .flag-form {
+        width: 100%;
+    }
+
+    .flag-form>div,
+    .flag-form input,
+    .flag-form button {
+        width: 100%;
+        min-width: 0;
+    }
+
+    .flag-form input {
+        font-size: 0.8rem !important;
+    }
+
+    .flag-form button {
+        min-height: 42px;
+    }
+
+    .treasure-node {
+        width: 100% !important;
+        padding: 0 !important;
+        margin-top: 2.5rem !important;
+    }
+
+    .treasure-node .timeline-dot {
+        right: auto !important;
+        top: auto !important;
+        margin-bottom: 1rem !important;
+    }
+
+    .treasure-node>div:last-child {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    #mainframe-card {
+        padding: 1.25rem !important;
+    }
+
+    #mainframe-title {
+        font-size: 1rem !important;
+        letter-spacing: 0.08em !important;
+        overflow-wrap: anywhere;
+    }
+
+    #mainframe-status {
+        font-size: 0.6rem !important;
+        line-height: 1.7 !important;
+        overflow-wrap: anywhere;
+    }
+
+    #audio-toggle-btn {
+        width: 44px !important;
+        height: 44px !important;
+        bottom: 1rem !important;
+        left: 1rem !important;
+    }
+
+    #audio-play-icon {
+        width: 1.65rem !important;
+        height: 1.65rem !important;
+    }
+}
+
+@media (max-width: 380px) {
+    body {
+        padding: 0.75rem !important;
+    }
+
+    header h1 {
+        font-size: 2.15rem !important;
+    }
+
+    .timeline-item {
+        padding-right: 2rem !important;
+    }
+
+    .timeline-wrapper>.absolute {
+        right: 1rem !important;
+    }
+
+    .timeline-item .timeline-dot {
+        right: 1rem !important;
+    }
+
+    .cyber-card {
+        padding: 0.85rem !important;
+    }
+
+    .cyber-card .text-xs {
+        font-size: 0.58rem !important;
+    }
+
+    .cyber-spoiler {
+        font-size: 0.75rem !important;
+    }
+}
+
+.glass-panel .grid>div .status-up {
+    background-color: #888888 !important;
+    box-shadow: 0 0 8px #888888 !important;
+}
+
+.glass-panel .grid>div .status-warn {
+    background-color: var(--theme-green) !important;
+    box-shadow: 0 0 8px var(--theme-green) !important;
+}
+
+.cyber-card.active:hover {
+    border-left-color: var(--theme-green) !important;
+}
+
+.cyber-card.active:hover .text-cyan-400,
+.cyber-card.active:hover .text-cyan-500,
+.cyber-card.active:hover .text-cyan-300,
+.cyber-card.active:hover .text-cyan-600,
+.cyber-card.active:hover .cyber-btn,
+.cyber-card.active:hover .node-prefix {
+    color: var(--theme-green) !important;
+}
+
+.cyber-card.active:hover .status-dot {
+    background-color: var(--theme-green) !important;
+    box-shadow: 0 0 8px var(--theme-green) !important;
+}
+
+.cyber-card.active:hover .cyber-btn {
+    border-color: var(--theme-green) !important;
+    box-shadow: 0 0 15px rgba(0, 255, 136, 0.4);
+}
+
+.cyber-card.active:hover .border-cyan-500,
+.cyber-card.active:hover .border-cyan-400 {
+    border-color: var(--theme-green) !important;
+}
+
+.cyber-card.active:hover h2 .bg-cyan-400,
+.cyber-card.active:hover .node-status-badge .bg-cyan-400 {
+    background-color: var(--theme-green) !important;
+    box-shadow: 0 0 8px var(--theme-green) !important;
+}
+
+.cyber-spoiler {
+    position: relative;
+    color: transparent !important;
+    text-shadow: none !important;
+    filter: none !important;
+    overflow: hidden;
+
+    background: repeating-linear-gradient(135deg,
+            #303030 0px,
+            #303030 4px,
+            #151515 4px,
+            #151515 12px) !important;
+}
+
+.cyber-spoiler::after {
+    color: var(--theme-cyan) !important;
+    text-shadow: 0 0 8px rgba(0, 210, 255, 0.6);
+}
+
+.cyber-spoiler:hover,
+.cyber-spoiler:active {
+    color: #eee !important;
+    background: #111 !important;
+    filter: none !important;
+}
+
+.cyber-spoiler:hover,
+.cyber-spoiler:active {
+    background: rgba(15, 15, 15, 0.85) !important;
+    filter: blur(0);
+}
+
+.cyber-spoiler::after {
+    opacity: 0;
+}
+
+.cyber-spoiler:hover::after,
+.cyber-spoiler:active::after {
+    opacity: 1;
+}
+
+.cyber-input {
+    text-align: left !important;
+    direction: ltr !important;
+}
+
+@media (min-width: 768px) {
+    .timeline-item:nth-child(odd) .cyber-card {
+        border-left: 2px solid var(--theme-cyan) !important;
+        border-right: none !important;
+    }
+
+    .timeline-item:nth-child(even) .cyber-card {
+        border-right: 2px solid var(--theme-cyan) !important;
+        border-left: none !important;
+    }
+
+    .timeline-item:nth-child(odd) .cyber-card.active:hover {
+        border-left-color: var(--theme-green) !important;
+        box-shadow: -5px 0 20px rgba(0, 255, 136, 0.15);
+    }
+
+    .timeline-item:nth-child(even) .cyber-card.active:hover {
+        border-right-color: var(--theme-green) !important;
+        box-shadow: 5px 0 20px rgba(0, 255, 136, 0.15);
+    }
+}
+
+@media (max-width: 767px) {
+    .timeline-item .cyber-card {
+        border-left: 2px solid var(--theme-cyan) !important;
+        border-right: none !important;
+    }
+}
+
+.encrypted-placeholder {
+    position: relative;
+    color: transparent !important;
+    font-family: inherit !important;
+    font-size: 0.9rem !important;
+    font-weight: 400 !important;
+    letter-spacing: normal !important;
+    text-align: center !important;
+    direction: rtl !important;
+    background:
+        repeating-linear-gradient(-45deg,
+            rgba(255, 255, 255, .08) 0px,
+            rgba(255, 255, 255, .08) 2px,
+            rgba(255, 255, 255, .02) 2px,
+            rgba(255, 255, 255, .02) 7px) !important;
+    border: 1px solid rgba(255, 255, 255, .12) !important;
+    border-right: 2px solid var(--theme-cyan) !important;
+    padding: 1rem !important;
+    min-height: 52px;
+}
+
+.encrypted-placeholder::after {
+    content: "محتوای این نود رمزنگاری شده است";
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #9ca3af;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 400;
+    letter-spacing: normal;
+    background:
+        repeating-linear-gradient(-45deg,
+            rgba(255, 255, 255, .08) 0px,
+            rgba(255, 255, 255, .08) 2px,
+            rgba(255, 255, 255, .02) 2px,
+            rgba(255, 255, 255, .02) 7px);
+}
+
+
+/* ===== Solved / Active node visual state refinements ===== */
+.solved-card .node-prefix,
+.solved-card [class*="text-cyan-"] {
+    color: var(--theme-green) !important;
+}
+
+.solved-card [class*="border-cyan-"] {
+    border-color: var(--theme-green) !important;
+}
+
+.solved-card [class*="bg-cyan-"] {
+    background-color: var(--theme-green) !important;
+}
+
+.solved-card [class*="shadow-"][class*="cyan"] {
+    box-shadow: 0 0 8px var(--theme-green), 0 0 15px var(--theme-green) !important;
+}
+
+/* Active target dot: match the reference CTF UI */
+.active-dot {
+    background-color: var(--theme-bg-dark) !important;
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+    border: 2px solid var(--theme-cyan) !important;
+    box-shadow: 0 0 12px var(--theme-cyan) !important;
+    animation: pulse-cyan 2s infinite !important;
+}
+
+.cyber-badge-normal {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    padding: 0.15rem 0.5rem;
+    font-family: 'Fira Code', monospace;
+    color: #9ca3af;
+}
+
+/* استایل اختصاصی فقط برای چالش‌هایی که واقعاً حل شده‌اند */
+.timeline-item[data-solved="true"] .cyber-card {
+    border-left-color: var(--theme-green) !important;
+}
+
+@media (min-width: 768px) {
+    .timeline-item:nth-child(odd)[data-solved="true"] .cyber-card {
+        border-left-color: var(--theme-green) !important;
+    }
+
+    .timeline-item:nth-child(even)[data-solved="true"] .cyber-card {
+        border-right-color: var(--theme-green) !important;
+    }
+}
+
+.cyber-spoiler .cyber-badge-normal,
+.cyber-spoiler code {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    color: inherit;
+}
+
+.cyber-spoiler .cyber-badge-normal {
+    background: transparent !important;
+    border-color: transparent !important;
+    color: inherit !important;
+    box-shadow: none !important;
+    transition: all 0.3s ease;
+}
+
+.cyber-spoiler:hover .cyber-badge-normal {
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    color: #9ca3af !important;
+}
+
+.cyber-card .title-dot {
+    background-color: #00f0ff !important;
+    box-shadow: 0 0 10px rgba(0, 240, 255, 0.6) !important;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cyber-card:hover .title-dot {
+    background-color: var(--theme-green) !important;
+    box-shadow: 0 0 14px rgba(0, 255, 136, 0.8) !important
+}
+
+.timeline-item[data-solved="true"] .title-dot,
+.timeline-item[data-solved="true"] .cyber-card:hover .title-dot {
+    background-color: var(--theme-green) !important;
+    box-shadow: 0 0 12px rgba(0, 255, 136, 0.6) !important;
+    animation: none !important;
+}
+
+/* تنظیم دایره بیرونی برای نودهای حل‌شده */
+.timeline-item[data-solved="true"] .timeline-dot,
+.timeline-item[data-solved="true"] .solved-dot {
+    background-color: #121212 !important;
+    /* رنگ زغالی برای پر کردن فضای خالی */
+    border: 2px solid var(--theme-green) !important;
+    /* خط دور سبز نئونی */
+    box-shadow: 0 0 10px rgba(0, 255, 136, 0.4);
+    position: relative !important;
+    width: 20px !important;
+    height: 20px !important;
+    border-radius: 50% !important;
+}
+
+/* فیکس کردن نقطه سبز دقیقاً در مرکز هندسی دایره */
+.timeline-item[data-solved="true"] .timeline-dot::after,
+.timeline-item[data-solved="true"] .solved-dot::after {
+    content: '' !important;
+    position: absolute !important;
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+    /* انتقال دقیق به نقطه مرکزی */
+    width: 6px !important;
+    height: 6px !important;
+    background-color: var(--theme-green) !important;
+    border-radius: 50% !important;
+    box-shadow: 0 0 6px var(--theme-green);
+}
+
+/* رنگ خط تایم‌لاین برای نودهای حل‌شده (سبز نئونی) */
+.timeline-item[data-solved="true"]~.timeline-line,
+.timeline-item[data-solved="true"]::before,
+.timeline-item[data-solved="true"]::after {
+    background-color: var(--theme-green) !important;
+}
+
+/* رنگ خط تایم‌لاین پشت نود فعال (آبی سایان) */
+.timeline-item[data-solved="false"]::before,
+.timeline-item[data-solved="false"]::after,
+.timeline-item:not([data-solved="true"]) .timeline-line {
+    background-color: #00f0ff !important;
+}
+
+.box-hint {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.25rem;
+    padding: 1rem;
+    margin-top: 0.75rem;
+    font-family: 'Vazirmatn', sans-serif;
+    /* تنظیم فونت فارسی */
+    font-size: 0.85rem;
+    color: var(--theme-gray-light);
+    direction: rtl;
+    /* راست‌چین برای متن فارسی */
+    text-align: right;
+}
+
+/* اگر داخل هینت کد یا اصطلاحات انگلیسی/فنی دارید */
+.box-hint code,
+.box-hint .font-mono-cyber {
+    font-family: 'Fira Code', monospace;
+    direction: ltr;
+    unicode-bidi: embed;
+}
+
+.locked-spoiler-box {
+    position: relative;
+    color: transparent !important;
+    text-shadow: none !important;
+    filter: none !important;
+    overflow: hidden;
+    background: repeating-linear-gradient(135deg,
+            #303030 0px,
+            #303030 4px,
+            #151515 4px,
+            #151515 12px) !important;
+    padding: 0.85rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.25rem;
+    user-select: none;
+    pointer-events: none;
+    /* غیرقابل کلیک برای اینکه باز نشود */
+    min-height: 52px;
+}
+
+.locked-spoiler-box::after {
+    content: "محتوای این نود رمزنگاری شده است";
+    /* یا متنی که مد نظرتان هست */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Vazirmatn', sans-serif;
+    /* فونت فارسی برای متن */
+    font-size: 0.8rem;
+    color: var(--theme-cyan);
+    letter-spacing: 0.05em;
+    opacity: 0.95;
+    white-space: nowrap;
+    text-shadow: 0 0 8px rgba(0, 210, 255, 0.6);
+}
+
+.locked-mainframe-card {
+    background-color: #050505 !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    /* حاشیه خاکستری محو و ملایم */
+    box-shadow: none !important;
+    opacity: 0.65;
+}
+
+.locked-mainframe-card:hover {
+    opacity: 0.85;
+}
+
+/* کادری دقیقاً شبیه کارت‌های داکر کانتینر بالای صفحه */
+/* کادر بیرونی دو لایه شبیه داکر */
+.docker-outer-box {
+    background: rgba(15, 15, 15, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.35rem;
+    padding: 6px;
+    /* ایجاد فاصله برای کادر درونی */
+}
+
+/* کادر درونی تیره‌تر با فاصله */
+.docker-inner-box {
+    background: #050505;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 0.2rem;
+}
+
+/* اصلاح چسبندگی حروف فارسی و اعمال فونت درست */
+.cyber-card h1,
+.cyber-card h2,
+.cyber-card h3,
+.cyber-card .title,
+.timeline-item {
+    font-family: 'Vazirmatn', sans-serif !important;
+    letter-spacing: normal !important;
+    /* لغو فاصله‌گذاری بین حروف */
+}
+
+/* خنثی‌سازی کامل فاصله‌گذاری حروف برای کارت‌ها و تمام عناصر داخل آن‌ها */
+.cyber-card,
+.cyber-card *,
+.timeline-item,
+.timeline-item * {
+    letter-spacing: normal !important;
+}
